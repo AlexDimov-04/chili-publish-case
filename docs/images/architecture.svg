@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 740" width="1280" height="740"><defs>
+  <radialGradient id="heat" cx="50%" cy="100%" r="75%"><stop offset="0" stop-color="#ff3c14" stop-opacity="0.28"/><stop offset="1" stop-color="#ff3c14" stop-opacity="0"/></radialGradient>
+  <radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ff1f52" stop-opacity="0.45"/><stop offset="1" stop-color="#ff1f52" stop-opacity="0"/></radialGradient>
+  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#ff7a1a"/></marker>
+</defs>
+<rect width="1280" height="740" rx="18" fill="#0c0807"/>
+<rect width="1280" height="740" rx="18" fill="url(#heat)"/>
+<circle cx="424" cy="750" r="1.2" fill="#ffc35a"><animate attributeName="cy" from="750" to="-10" dur="13.5s" begin="-5.4s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0.8;0" dur="13.5s" begin="-5.4s" repeatCount="indefinite"/></circle><circle cx="424" cy="750" r="4.8" fill="#ffc35a" opacity="0.12"><animate attributeName="cy" from="750" to="-10" dur="13.5s" begin="-5.4s" repeatCount="indefinite"/></circle><circle cx="1232" cy="750" r="1.6" fill="#ff1f52"><animate attributeName="cy" from="750" to="-10" dur="9.0s" begin="-6.8s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0.8;0" dur="9.0s" begin="-6.8s" repeatCount="indefinite"/></circle><circle cx="1232" cy="750" r="6.4" fill="#ff1f52" opacity="0.12"><animate attributeName="cy" from="750" to="-10" dur="9.0s" begin="-6.8s" repeatCount="indefinite"/></circle><circle cx="464" cy="750" r="1.9" fill="#ff1f52"><animate attributeName="cy" from="750" to="-10" dur="11.6s" begin="-0.2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0.8;0" dur="11.6s" begin="-0.2s" repeatCount="indefinite"/></circle><circle cx="464" cy="750" r="7.6" fill="#ff1f52" opacity="0.12"><animate attributeName="cy" from="750" to="-10" dur="11.6s" begin="-0.2s" repeatCount="indefinite"/></circle><circle cx="1106" cy="750" r="1.1" fill="#ff1f52"><animate attributeName="cy" from="750" to="-10" dur="7.9s" begin="-4.5s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0.8;0" dur="7.9s" begin="-4.5s" repeatCount="indefinite"/></circle><circle cx="1106" cy="750" r="4.4" fill="#ff1f52" opacity="0.12"><animate attributeName="cy" from="750" to="-10" dur="7.9s" begin="-4.5s" repeatCount="indefinite"/></circle><circle cx="1025" cy="750" r="1.4" fill="#ff7a1a"><animate attributeName="cy" from="750" to="-10" dur="8.5s" begin="-10.1s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0.8;0" dur="8.5s" begin="-10.1s" repeatCount="indefinite"/></circle><circle cx="1025" cy="750" r="5.6" fill="#ff7a1a" opacity="0.12"><animate attributeName="cy" from="750" to="-10" dur="8.5s" begin="-10.1s" repeatCount="indefinite"/></circle><circle cx="934" cy="750" r="1.7" fill="#ffc35a"><animate attributeName="cy" from="750" to="-10" dur="10.2s" begin="-3.9s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0.8;0" dur="10.2s" begin="-3.9s" repeatCount="indefinite"/></circle><circle cx="934" cy="750" r="6.8" fill="#ffc35a" opacity="0.12"><animate attributeName="cy" from="750" to="-10" dur="10.2s" begin="-3.9s" repeatCount="indefinite"/></circle><circle cx="487" cy="750" r="1.4" fill="#ff7a1a"><animate attributeName="cy" from="750" to="-10" dur="6.2s" begin="-6.3s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0.8;0" dur="6.2s" begin="-6.3s" repeatCount="indefinite"/></circle><circle cx="487" cy="750" r="5.6" fill="#ff7a1a" opacity="0.12"><animate attributeName="cy" from="750" to="-10" dur="6.2s" begin="-6.3s" repeatCount="indefinite"/></circle><circle cx="1199" cy="750" r="2.4" fill="#ff7a1a"><animate attributeName="cy" from="750" to="-10" dur="10.4s" begin="-2.5s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0.8;0" dur="10.4s" begin="-2.5s" repeatCount="indefinite"/></circle><circle cx="1199" cy="750" r="9.6" fill="#ff7a1a" opacity="0.12"><animate attributeName="cy" from="750" to="-10" dur="10.4s" begin="-2.5s" repeatCount="indefinite"/></circle><circle cx="1129" cy="750" r="1.1" fill="#ff7a1a"><animate attributeName="cy" from="750" to="-10" dur="11.2s" begin="-7.9s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0.8;0" dur="11.2s" begin="-7.9s" repeatCount="indefinite"/></circle><circle cx="1129" cy="750" r="4.4" fill="#ff7a1a" opacity="0.12"><animate attributeName="cy" from="750" to="-10" dur="11.2s" begin="-7.9s" repeatCount="indefinite"/></circle><circle cx="991" cy="750" r="0.8" fill="#ff1f52"><animate attributeName="cy" from="750" to="-10" dur="6.5s" begin="-13.2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0.8;0" dur="6.5s" begin="-13.2s" repeatCount="indefinite"/></circle><circle cx="991" cy="750" r="3.2" fill="#ff1f52" opacity="0.12"><animate attributeName="cy" from="750" to="-10" dur="6.5s" begin="-13.2s" repeatCount="indefinite"/></circle><circle cx="752" cy="750" r="2.5" fill="#ff7a1a"><animate attributeName="cy" from="750" to="-10" dur="13.6s" begin="-1.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0.8;0" dur="13.6s" begin="-1.6s" repeatCount="indefinite"/></circle><circle cx="752" cy="750" r="10.0" fill="#ff7a1a" opacity="0.12"><animate attributeName="cy" from="750" to="-10" dur="13.6s" begin="-1.6s" repeatCount="indefinite"/></circle><circle cx="1193" cy="750" r="2.5" fill="#ff7a1a"><animate attributeName="cy" from="750" to="-10" dur="13.7s" begin="-2.2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0.8;0" dur="13.7s" begin="-2.2s" repeatCount="indefinite"/></circle><circle cx="1193" cy="750" r="10.0" fill="#ff7a1a" opacity="0.12"><animate attributeName="cy" from="750" to="-10" dur="13.7s" begin="-2.2s" repeatCount="indefinite"/></circle><circle cx="697" cy="750" r="0.9" fill="#ff7a1a"><animate attributeName="cy" from="750" to="-10" dur="7.5s" begin="-5.7s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0.8;0" dur="7.5s" begin="-5.7s" repeatCount="indefinite"/></circle><circle cx="697" cy="750" r="3.6" fill="#ff7a1a" opacity="0.12"><animate attributeName="cy" from="750" to="-10" dur="7.5s" begin="-5.7s" repeatCount="indefinite"/></circle><circle cx="548" cy="750" r="2.5" fill="#ff1f52"><animate attributeName="cy" from="750" to="-10" dur="10.0s" begin="-8.9s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0.8;0" dur="10.0s" begin="-8.9s" repeatCount="indefinite"/></circle><circle cx="548" cy="750" r="10.0" fill="#ff1f52" opacity="0.12"><animate attributeName="cy" from="750" to="-10" dur="10.0s" begin="-8.9s" repeatCount="indefinite"/></circle><circle cx="303" cy="750" r="2.3" fill="#ffc35a"><animate attributeName="cy" from="750" to="-10" dur="10.8s" begin="-8.9s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0.8;0" dur="10.8s" begin="-8.9s" repeatCount="indefinite"/></circle><circle cx="303" cy="750" r="9.2" fill="#ffc35a" opacity="0.12"><animate attributeName="cy" from="750" to="-10" dur="10.8s" begin="-8.9s" repeatCount="indefinite"/></circle><circle cx="331" cy="750" r="1.6" fill="#ff1f52"><animate attributeName="cy" from="750" to="-10" dur="11.5s" begin="-7.2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0.8;0" dur="11.5s" begin="-7.2s" repeatCount="indefinite"/></circle><circle cx="331" cy="750" r="6.4" fill="#ff1f52" opacity="0.12"><animate attributeName="cy" from="750" to="-10" dur="11.5s" begin="-7.2s" repeatCount="indefinite"/></circle><circle cx="1058" cy="750" r="1.1" fill="#ff7a1a"><animate attributeName="cy" from="750" to="-10" dur="6.9s" begin="-8.5s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0.8;0" dur="6.9s" begin="-8.5s" repeatCount="indefinite"/></circle><circle cx="1058" cy="750" r="4.4" fill="#ff7a1a" opacity="0.12"><animate attributeName="cy" from="750" to="-10" dur="6.9s" begin="-8.5s" repeatCount="indefinite"/></circle><circle cx="935" cy="750" r="1.3" fill="#ff7a1a"><animate attributeName="cy" from="750" to="-10" dur="8.6s" begin="-2.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;0.8;0" dur="8.6s" begin="-2.6s" repeatCount="indefinite"/></circle><circle cx="935" cy="750" r="5.2" fill="#ff7a1a" opacity="0.12"><animate attributeName="cy" from="750" to="-10" dur="8.6s" begin="-2.6s" repeatCount="indefinite"/></circle>
+<rect x="20" y="80" width="1240" height="200" rx="16" fill="none" stroke="#3a2018" stroke-dasharray="2 6"/>
+<text x="44" y="114" font-family="Georgia, 'Times New Roman', serif" font-style="italic" font-size="22" fill="#ff1f52">I.</text>
+<text x="76" y="114" font-family="Georgia, 'Times New Roman', serif" font-size="22" fill="#f7ede7">Ingest</text>
+<text x="155.6" y="114" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="13" fill="#85695f">npm run ingest · once per SDK version · ~10 s</text>
+<g>
+<rect x="40" y="132" width="214" height="122" rx="12" fill="#1a100d" stroke="#3a2018"/>
+<rect x="40" y="132" width="4" height="122" rx="2" fill="#ffc35a"/>
+<text x="58" y="162" font-family="Georgia, 'Times New Roman', serif" font-size="19" fill="#f7ede7">studio-sdk @ 1.48.0</text>
+<text x="58" y="186" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">GitHub tag, shallow clone</text><text x="58" y="204" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">same version as npm latest</text>
+<text x="58" y="240" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="11.5" fill="#ff7a1a">fetch-sdk.ts</text>
+</g>
+<g>
+<rect x="286" y="132" width="214" height="122" rx="12" fill="#1a100d" stroke="#3a2018"/>
+<rect x="286" y="132" width="4" height="122" rx="2" fill="#ff1f52"/>
+<text x="304" y="162" font-family="Georgia, 'Times New Roman', serif" font-size="19" fill="#f7ede7">AST chunker</text>
+<text x="304" y="186" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">ts-morph walks controllers</text><text x="304" y="204" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">and types: one chunk per</text><text x="304" y="222" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">public method or type</text>
+<text x="304" y="240" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="11.5" fill="#ff7a1a">chunk.ts</text>
+</g>
+<g>
+<rect x="532" y="132" width="214" height="122" rx="12" fill="#1a100d" stroke="#3a2018"/>
+<rect x="532" y="132" width="4" height="122" rx="2" fill="#ff1f52"/>
+<text x="550" y="162" font-family="Georgia, 'Times New Roman', serif" font-size="19" fill="#f7ede7">860 chunks</text>
+<text x="550" y="186" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">447 methods · 413 types</text><text x="550" y="204" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">sdk.* path + JSDoc + signature</text><text x="550" y="222" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">file · lines · pinned URL</text>
+
+</g>
+<g>
+<rect x="778" y="132" width="214" height="122" rx="12" fill="#1a100d" stroke="#3a2018"/>
+<rect x="778" y="132" width="4" height="122" rx="2" fill="#ff1f52"/>
+<text x="796" y="162" font-family="Georgia, 'Times New Roman', serif" font-size="19" fill="#f7ede7">Embeddings</text>
+<text x="796" y="186" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">text-embedding-3-small</text><text x="796" y="204" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">batches of 100</text><text x="796" y="222" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">58,865 tokens per ingest</text>
+<text x="796" y="240" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="11.5" fill="#ff7a1a">embed.ts</text>
+</g>
+<g>
+<rect x="1024" y="132" width="214" height="122" rx="12" fill="#1a100d" stroke="#3a2018"/>
+<rect x="1024" y="132" width="4" height="122" rx="2" fill="#ff7a1a"/>
+<text x="1042" y="162" font-family="Georgia, 'Times New Roman', serif" font-size="19" fill="#f7ede7">LanceDB</text>
+<text x="1042" y="186" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">embedded, files in data/</text><text x="1042" y="204" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">no server, no Docker</text><text x="1042" y="222" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">idempotent: table recreated</text>
+<text x="1042" y="240" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="11.5" fill="#ff7a1a">store.ts</text>
+</g>
+<path d="M254 193 L282 193" stroke="#ff7a1a" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/><path d="M500 193 L528 193" stroke="#ff7a1a" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/><path d="M746 193 L774 193" stroke="#ff7a1a" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/><path d="M992 193 L1020 193" stroke="#ff7a1a" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+<rect x="20" y="300" width="1240" height="384" rx="16" fill="none" stroke="#3a2018" stroke-dasharray="2 6"/>
+<text x="44" y="334" font-family="Georgia, 'Times New Roman', serif" font-style="italic" font-size="22" fill="#ff1f52">II.</text>
+<text x="76" y="334" font-family="Georgia, 'Times New Roman', serif" font-size="22" fill="#f7ede7">Ask</text>
+<text x="123.8" y="334" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="13" fill="#85695f">POST /api/ask · per question · ~4–10 s</text>
+<g>
+<rect x="40" y="372" width="214" height="122" rx="12" fill="#1a100d" stroke="#3a2018"/>
+<rect x="40" y="372" width="4" height="122" rx="2" fill="#ff1f52"/>
+<text x="58" y="402" font-family="Georgia, 'Times New Roman', serif" font-size="19" fill="#f7ede7">Question</text>
+<text x="58" y="426" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">zod: trimmed, 1–1000 chars</text><text x="58" y="444" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">400 on invalid input</text>
+<text x="58" y="480" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="11.5" fill="#ff7a1a">app.ts</text>
+</g>
+<g>
+<rect x="286" y="372" width="214" height="122" rx="12" fill="#1a100d" stroke="#3a2018"/>
+<rect x="286" y="372" width="4" height="122" rx="2" fill="#ff1f52"/>
+<text x="304" y="402" font-family="Georgia, 'Times New Roman', serif" font-size="19" fill="#f7ede7">Embed question</text>
+<text x="304" y="426" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">same embedding model</text><text x="304" y="444" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">as the index</text>
+<text x="304" y="480" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="11.5" fill="#ff7a1a">retrieve.ts</text>
+</g>
+<g>
+<rect x="532" y="372" width="214" height="122" rx="12" fill="#1a100d" stroke="#3a2018"/>
+<rect x="532" y="372" width="4" height="122" rx="2" fill="#ff7a1a"/>
+<text x="550" y="402" font-family="Georgia, 'Times New Roman', serif" font-size="19" fill="#f7ede7">Top-5 search</text>
+<text x="550" y="426" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">exact cosine nearest neighbours</text><text x="550" y="444" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">score = max(0, 1 − distance)</text><text x="550" y="462" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">TOP_K = 5</text>
+<text x="550" y="480" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="11.5" fill="#ff7a1a">store.ts</text>
+</g>
+<g>
+<rect x="778" y="372" width="214" height="122" rx="12" fill="#1a100d" stroke="#3a2018"/>
+<rect x="778" y="372" width="4" height="122" rx="2" fill="#ff1f52"/>
+<text x="796" y="402" font-family="Georgia, 'Times New Roman', serif" font-size="19" fill="#f7ede7">Grounded prompt</text>
+<text x="796" y="426" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">rules + snippet contract</text><text x="796" y="444" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">+ the 5 chunks, by sdk.* path</text><text x="796" y="462" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">versioned in git</text>
+<text x="796" y="480" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="11.5" fill="#ff7a1a">prompts/generate-code.md</text>
+</g>
+<g>
+<rect x="1024" y="372" width="214" height="122" rx="12" fill="#1a100d" stroke="#3a2018"/>
+<rect x="1024" y="372" width="4" height="122" rx="2" fill="#ff1f52"/>
+<text x="1042" y="402" font-family="Georgia, 'Times New Roman', serif" font-size="19" fill="#f7ede7">gpt-6.1-sol</text>
+<text x="1042" y="426" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">structured JSON output:</text><text x="1042" y="444" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">{ code, explanation,</text><text x="1042" y="462" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">  usedSymbols }</text>
+<text x="1042" y="480" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="11.5" fill="#ff7a1a">generate.ts</text>
+</g>
+<path d="M254 433 L282 433" stroke="#ff7a1a" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/><path d="M500 433 L528 433" stroke="#ff7a1a" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/><path d="M746 433 L774 433" stroke="#ff7a1a" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/><path d="M992 433 L1020 433" stroke="#ff7a1a" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+<g>
+<rect x="1024" y="540" width="214" height="122" rx="12" fill="#1a100d" stroke="#3a2018"/>
+<rect x="1024" y="540" width="4" height="122" rx="2" fill="#ffc35a"/>
+<text x="1042" y="570" font-family="Georgia, 'Times New Roman', serif" font-size="19" fill="#f7ede7">Type-check</text>
+<text x="1042" y="594" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">TS compiler (ts-morph) vs</text><text x="1042" y="612" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">@chili-publish/studio-sdk</text><text x="1042" y="630" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">pinned to 1.48.0 · ~20 ms</text>
+<text x="1042" y="648" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="11.5" fill="#ff7a1a">check/typecheck.ts</text>
+</g>
+<g>
+<rect x="778" y="540" width="214" height="122" rx="12" fill="#1a100d" stroke="#3a2018"/>
+<rect x="778" y="540" width="4" height="122" rx="2" fill="#ff1f52"/>
+<text x="796" y="570" font-family="Georgia, 'Times New Roman', serif" font-size="19" fill="#f7ede7">JSON response</text>
+<text x="796" y="594" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">answer · retrieval (5 chunks:</text><text x="796" y="612" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">symbol, file:lines, url, score)</text><text x="796" y="630" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">typecheck · meta</text>
+<text x="796" y="648" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="11.5" fill="#ff7a1a">ask.ts</text>
+</g>
+<g>
+<rect x="532" y="540" width="214" height="122" rx="12" fill="#1a100d" stroke="#3a2018"/>
+<rect x="532" y="540" width="4" height="122" rx="2" fill="#ff1f52"/>
+<text x="550" y="570" font-family="Georgia, 'Times New Roman', serif" font-size="19" fill="#f7ede7">Web UI</text>
+<text x="550" y="594" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">React 19 · Vite 8 · Tailwind 4</text><text x="550" y="612" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">code, badge, sources, scores</text><text x="550" y="630" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">3D CHILI mark · embers</text>
+<text x="550" y="648" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="11.5" fill="#ff7a1a">web/src</text>
+</g>
+<g>
+<rect x="286" y="540" width="214" height="122" rx="12" fill="#1a100d" stroke="#3a2018"/>
+<rect x="286" y="540" width="4" height="122" rx="2" fill="#ff1f52"/>
+<text x="304" y="570" font-family="Georgia, 'Times New Roman', serif" font-size="19" fill="#f7ede7">Structured log</text>
+<text x="304" y="594" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">one JSON line per request:</text><text x="304" y="612" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">latency per stage, tokens,</text><text x="304" y="630" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">typecheck, top symbols</text>
+<text x="304" y="648" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="11.5" fill="#ff7a1a">pino (Fastify)</text>
+</g>
+<g>
+<rect x="40" y="540" width="214" height="122" rx="12" fill="#1a100d" stroke="#3a2018"/>
+<rect x="40" y="540" width="4" height="122" rx="2" fill="#c9b2a8"/>
+<text x="58" y="570" font-family="Georgia, 'Times New Roman', serif" font-size="19" fill="#f7ede7">Eval + samples</text>
+<text x="58" y="594" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">16 cases: hit@5, MRR, recall</text><text x="58" y="612" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">end-to-end type-check rate</text><text x="58" y="630" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#c9b2a8">docs/samples.md</text>
+<text x="58" y="648" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="11.5" fill="#ff7a1a">src/eval · samples.ts</text>
+</g>
+<path d="M1131 494 L1131 536" stroke="#ff7a1a" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+<path d="M1024 601 L996 601" stroke="#ff7a1a" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/><path d="M778 601 L750 601" stroke="#ff7a1a" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/><path d="M532 601 L504 601" stroke="#ff7a1a" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+<path d="M1131 254 L682 368" stroke="#ff7a1a" stroke-width="1.6" fill="none" marker-end="url(#arrow)" stroke-dasharray="5 5"/>
+<text x="828" y="264" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="11.5" fill="#85695f">vectors + metadata</text>
+<rect x="44" y="706" width="14" height="10" rx="5" fill="#ffc35a"/>
+<text x="66" y="715" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#ffc35a">pinned @chili-publish/studio-sdk 1.48.0: the same version is ingested and used by the type-checker, so docs and checker agree</text>
+</svg>
