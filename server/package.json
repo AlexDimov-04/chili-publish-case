@@ -5,7 +5,8 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "fetch-sdk": "tsx src/ingest/fetch-sdk.ts"
+    "fetch-sdk": "tsx src/ingest/fetch-sdk.ts",
+    "ingest": "tsx src/ingest/index.ts"
   },
   "devDependencies": {
     "@types/node": "26.6.5",
@@ -14,6 +15,8 @@
     "vitest": "5.0.4"
   },
   "dependencies": {
+    "@lancedb/lancedb": "0.40.0",
+    "openai": "7.33.0",
     "ts-morph": "28.0.0"
   }
 }

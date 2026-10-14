@@ -12,6 +12,7 @@
   "scripts": {
     "typecheck": "npm run typecheck --workspaces",
     "test": "npm test -w server",
-    "fetch-sdk": "npm run fetch-sdk -w server"
+    "fetch-sdk": "npm run fetch-sdk -w server",
+    "ingest": "npm run ingest -w server"
   }
 }

@@ -20,3 +20,11 @@ export const PORT = Number(process.env.PORT || 3001);
 export const DATA_DIR = fileURLToPath(new URL('../../data/', import.meta.url));
 export const SDK_REPO_URL = 'https://github.com/chili-publish/studio-sdk';
 export const SDK_SOURCE_DIR = `${DATA_DIR}studio-sdk`;
+export const VECTOR_DB_DIR = `${DATA_DIR}lancedb`;
+export const CHUNKS_TABLE = 'sdk_chunks';
+
+export function requireOpenAiKey(): string {
+  const key = process.env.OPENAI_API_KEY;
+  if (!key) throw new Error('OPENAI_API_KEY is not set; copy .env.example to .env and fill it in.');
+  return key;
+}
