@@ -17,7 +17,8 @@
     "dev": "concurrently -k -n api,web -c blue,green \"npm run dev -w server\" \"npm run dev -w web\"",
     "start": "npm start -w server",
     "eval": "npm run eval -w server",
-    "eval:e2e": "npm run eval:e2e -w server"
+    "eval:e2e": "npm run eval:e2e -w server",
+    "eval:hybrid": "npm run eval:hybrid -w server"
   },
   "devDependencies": {
     "concurrently": "10.0.6"
