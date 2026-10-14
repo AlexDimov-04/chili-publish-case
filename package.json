@@ -1,0 +1,16 @@
+{
+  "name": "studio-sdk-code-assistant",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "workspaces": [
+    "server",
+    "web"
+  ],
+  "scripts": {
+    "typecheck": "npm run typecheck --workspaces",
+    "test": "npm test -w server"
+  }
+}
