@@ -34,8 +34,12 @@ export function App() {
     }
   }
 
-  // `?q=...` asks on load, so answers can be linked to (and screenshotted).
+  // `?q=...` asks on load, so answers can be linked to (and screenshotted). The ref keeps React's dev-mode
+  // double effect run from sending the question (and paying for it) twice.
+  const askedFromUrl = useRef(false);
   useEffect(() => {
+    if (askedFromUrl.current) return;
+    askedFromUrl.current = true;
     const initial = new URLSearchParams(window.location.search).get('q');
     if (initial) void ask(initial);
   }, []);
