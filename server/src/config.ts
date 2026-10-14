@@ -28,3 +28,7 @@ export function requireOpenAiKey(): string {
   if (!key) throw new Error('OPENAI_API_KEY is not set; copy .env.example to .env and fill it in.');
   return key;
 }
+
+/** Newest chat model available to the key at build time; it is a reasoning model, so no temperature setting. */
+export const CHAT_MODEL = process.env.CHAT_MODEL || 'gpt-6.1-sol';
+export const MAX_QUESTION_LENGTH = 1000;

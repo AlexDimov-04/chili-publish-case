@@ -48,3 +48,7 @@ export async function searchChunks(vector: number[], limit: number, dbDir = VECT
     distance: row._distance,
   }));
 }
+
+export async function countChunks(dbDir = VECTOR_DB_DIR): Promise<number> {
+  return (await openTable(dbDir)).countRows();
+}
