@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": ">=22.12"
+    "node": ">=24"
   },
   "workspaces": [
     "server",
@@ -11,6 +11,7 @@
   ],
   "scripts": {
     "typecheck": "npm run typecheck --workspaces",
-    "test": "npm test -w server"
+    "test": "npm test -w server",
+    "fetch-sdk": "npm run fetch-sdk -w server"
   }
 }

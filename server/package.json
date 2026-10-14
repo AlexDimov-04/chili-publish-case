@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "fetch-sdk": "tsx src/ingest/fetch-sdk.ts"
   },
   "devDependencies": {
     "@types/node": "26.6.5",
