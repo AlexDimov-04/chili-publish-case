@@ -7,7 +7,7 @@
   <img alt="TypeScript strict" src="https://img.shields.io/badge/TypeScript-strict-ff7a1a?style=flat-square&labelColor=1a100d">
   <img alt="LanceDB local" src="https://img.shields.io/badge/vector%20store-LanceDB%20(local)-ffc35a?style=flat-square&labelColor=1a100d">
   <img alt="studio-sdk 1.48.0" src="https://img.shields.io/badge/studio--sdk-1.48.0-ff0048?style=flat-square&labelColor=1a100d">
-  <img alt="28 unit tests" src="https://img.shields.io/badge/unit%20tests-28%20passing-9fd27e?style=flat-square&labelColor=1a100d">
+  <a href="https://github.com/AlexDimov-04/chili-publish-case/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/AlexDimov-04/chili-publish-case/actions/workflows/ci.yml/badge.svg?branch=main"></a>
 </p>
 
 A small RAG application that writes **TypeScript for the CHILI GraFx Studio SDK** and shows its work. It ingests the SDK's public API surface (every controller method and exported type of `@chili-publish/studio-sdk` 1.48.0) into a local LanceDB vector store, retrieves the **top 5** chunks for a question, has an OpenAI model write code **using only those chunks**, and then **type-checks the code against the real npm package** of the same version. The API and the UI show every retrieved chunk with its file, line range, GitHub link and cosine score.
@@ -44,7 +44,7 @@ A small RAG application that writes **TypeScript for the CHILI GraFx Studio SDK*
 | **Models** | `text-embedding-3-small` for embeddings · `gpt-6.1-sol` for generation (structured JSON output) |
 | **Retrieval** | exact cosine top-5 · `score = max(0, 1 − cosine distance)` |
 | **Check** | every snippet compiled against `@chili-publish/studio-sdk@1.48.0` with `strict` |
-| **Retrieval eval** | 16 cases · **hit@5 1.00 · MRR 0.81 · recall@5 0.94** · two candidate improvements tested and rejected by the eval (hybrid search, sub-queries) |
+| **Retrieval eval** | 16 cases · **hit@5 1.00 · MRR 0.81 · recall@5 0.94** · three candidate improvements tested and rejected by the eval (hybrid search, sub-queries, enum enrichment) |
 | **End to end** | code generated for 14/16 eval questions · **type-check passed 14/14** · the other 2 declined instead of guessing |
 | **Cost** | full ingest ≈ 59k embedding tokens (well under one cent) · a question ≈ 1k input / 100–300 output tokens |
 
@@ -124,12 +124,13 @@ curl -s -X POST localhost:3001/api/ask \
 | `npm run ingest` | fetch the pinned SDK tag → chunk → embed → write LanceDB (idempotent) | yes |
 | `npm run dev` | API (tsx watch) and web UI (Vite) together | yes |
 | `npm start` | API only | yes |
-| `npm test` | 28 unit tests (vitest), **no network** | no |
+| `npm test` | 29 unit tests (vitest), **no network** | no |
 | `npm run typecheck` | `tsc --noEmit` in both workspaces (TypeScript 7) | no |
 | `npm run eval` | retrieval eval: hit@5, MRR, recall@5 → `eval/results.md` | yes |
 | `npm run eval:e2e` | the same plus generation and type-check pass rate | yes |
 | `npm run eval:hybrid` | the hybrid-retrieval experiment → `eval/hybrid-results.md` | yes |
 | `npm run eval:subquery` | the sub-query experiment (12 variants × 3 runs) → `eval/subquery-results.md` | yes |
+| `npm run eval:enum` | the enum-enrichment experiment → `eval/enum-results.md` | yes |
 | `npm run samples` | sends the sample questions to the running API → `docs/samples.md` | yes |
 
 Environment variables (see [`.env.example`](.env.example)):
@@ -467,7 +468,20 @@ The full table is in [`eval/subquery-results.md`](eval/subquery-results.md).
 - `create(parentId, type)` is **generic over the variable type**, so the word *list* pulls the search toward `ListVariable` declarations. The plain query "create a variable" puts `create` at **rank 1**.
 - Likewise, "move a frame vertically" puts `setVerticalMovement` at **rank 1**; the decomposer simply never split "position" into two axes.
 
-That points to fixing the **document side** rather than the query (see [more time](#what-i-would-do-with-more-time)).
+That pointed to fixing the **document side** rather than the query.
+
+### A third change the eval rejected: enum values in method chunks
+
+If the chunk for `create` never mentions *list*, add it. At ingest, method chunks whose parameters are enums get one extra line listing the values (`// VariableType: shortText, longText, …, list, …`). That affects 37 of 447 method chunks ([`server/src/eval/enum-experiment.ts`](server/src/eval/enum-experiment.ts), `npm run eval:enum`).
+
+| Query | rank of `variable.create` before | after |
+|---|---|---|
+| required question 1 (full text) | 55 | **23** |
+| sub-query "Create a list variable" | 9 | **6** |
+
+It moves the right chunk the right way, but **not into the top 5**, so all 16 eval cases are unchanged. The option exists in the chunker but stays **off by default** ([`eval/enum-results.md`](eval/enum-results.md)).
+
+**What the three experiments add up to:** the missing chunks are consistently *within reach* (ranks 6–23), just not in the top 5. The bottleneck is the final ranking, not recall of the candidate set. That defines the next step below.
 
 **Limits of this eval:** 16 cases and one run each. That is directional, not statistically solid; generation in particular varies between runs.
 
@@ -503,6 +517,7 @@ Every answered request writes one structured JSON line (pino, through Fastify), 
 ```
 .
 ├─ .env.example                 every variable, explained, no values
+├─ .github/workflows/ci.yml     typecheck + unit tests + web build on Node 22.12, 24 and 26
 ├─ server/                      Fastify API + ingest + eval (TypeScript, strict)
 │  ├─ prompts/generate-code.md  the versioned prompt
 │  ├─ src/
@@ -518,13 +533,13 @@ Every answered request writes one structured JSON line (pino, through Fastify), 
 │  │  ├─ check/typecheck.ts     compile the snippet against @chili-publish/studio-sdk
 │  │  ├─ ask.ts                 retrieve → generate → type-check, timings, tokens
 │  │  ├─ app.ts / server.ts     routes, validation, structured logging
-│  │  ├─ eval/                  run.ts, metrics.ts, hybrid-experiment.ts, subquery-experiment.ts
+│  │  ├─ eval/                  run.ts, metrics.ts, and the hybrid / subquery / enum experiments
 │  │  └─ samples.ts             records docs/samples.md from the running API
-│  └─ test/                     28 unit tests, no network (fixture SDK, temp LanceDB)
+│  └─ test/                     29 unit tests, no network (fixture SDK, temp LanceDB)
 ├─ web/                         React 19 + Vite 8 + Tailwind 4
 │  └─ src/components/           Composer, Progress, CodeCard, ChunkList, ResultView,
 │                               ChiliLogo3D (three.js, lazy), Embers (canvas), Backdrop
-├─ eval/                        retrieval-cases.json, results.md, hybrid-results.md, subquery-results.md
+├─ eval/                        retrieval-cases.json, results.md, and one results file per experiment
 ├─ docs/                        samples.md, images/
 └─ data/                        (gitignored) cloned SDK source + LanceDB files
 ```
@@ -537,7 +552,7 @@ Every answered request writes one structured JSON line (pino, through Fastify), 
 | **AST chunks**, one per method or type, headed by the `sdk.` path | the method is the unit of correctness; scores mean something; exact names are searchable | needed SDK-specific handling (arrow properties, nested controllers, `@ignore`) |
 | **LanceDB embedded** | a real local vector store with no server or Docker | single process; Qdrant or pgvector when there are several instances or a bigger corpus |
 | **Exact search**, no ANN index | 860 rows scan in milliseconds, with perfect recall for the given embedding | doesn't scale to millions of chunks (it doesn't need to) |
-| **Vector-only retrieval** | the eval rejected all five hybrid variants and the sub-query decomposition (12 variants × 3 runs) | two-part questions still miss their second half |
+| **Vector-only retrieval** | the eval rejected hybrid search (5 variants), sub-query decomposition (12 variants × 3 runs) and enum enrichment | two-part questions still miss their second half |
 | **Cosine similarity clipped to [0, 1]** as the score | honest: an unrelated chunk reads as ≈ 0, not 0.5 | absolute values look modest (0.3–0.5) for good matches |
 | **Strict grounding**: decline instead of guess | a wrong API call is worse than "I don't have that method" | required question 1 returns no code until retrieval finds `create` |
 | **Structured output** with a zod schema | no markdown parsing; one schema validates both request and reply | ties generation to models with JSON-schema support |
@@ -550,11 +565,11 @@ Every answered request writes one structured JSON line (pino, through Fastify), 
 
 ## What I would do with more time
 
-1. **Enrich method chunks at ingest instead of rewriting queries.** The sub-query diagnosis showed `create(parentId, type)` is missed because it is generic: nothing in its chunk says *list*. Inlining the members of the enums a method takes (here `VariableType`: list, shortText, image, …) and a one-line "what it is used for" into each method chunk would let "create a list variable" match `create` directly. Deterministic, no extra model call at query time, and measurable with the same eval.
+1. **Re-rank a wider candidate set before cutting to 5.** All three experiments show the missing chunks sitting at ranks 6–23. Retrieve the top 30, re-rank them with a cross-encoder or a small LLM call that sees the whole question, *then* keep 5, so the API still returns exactly 5 chunks with their scores. Measure it with the same eval and the same keep rule.
 2. **Widen the corpus where the eval points to gaps:** `utils/EngineEvent.ts` (event subscriptions), then the website guides, which hold conceptual knowledge that signatures don't.
 3. **Add a repair loop:** when the type-check fails, send the compiler errors back once and ask for a fix.
 4. **Evaluate behaviour, not just compilation:** a larger eval set with repeated runs to separate signal from noise, plus an LLM-judged or human-reviewed answer score with the expected snippet as the reference.
-5. **Set up CI:** typecheck, unit tests and the retrieval eval on every PR, with the key as a secret.
+5. **Run the retrieval eval in CI too.** CI already runs typecheck, unit tests and the build on Node 22.12/24/26; the eval needs the API key as a secret and would gate retrieval changes on every PR.
 6. **Production readiness:**
    - a stateless API, with ingest as a versioned job per SDK release and readiness once the index is loaded;
    - a cache for embeddings of repeated questions;
@@ -571,7 +586,7 @@ I wrote a build plan first: requirements checklist, architecture, commit plan, q
   - the corpus and its exclusions (`src/next/` out);
   - `sdk` as the snippet variable name;
   - pinning everything to the latest versions;
-  - trying hybrid retrieval and then sub-query decomposition, and dropping both because the eval did not show a real improvement;
+  - trying hybrid retrieval, sub-query decomposition and enum enrichment, and dropping all three because the eval did not show a real improvement;
   - lowering the Node floor to 22.12 (verified on a real Node 22.12 binary), so a reviewer on the LTS line can run it;
   - the UI direction, through three iterations: plain, a minimal "notebook" style, and the CHILI publish fire theme with the 3D mark.
-- **Every number in this README comes from a recorded run,** re-run on the final code before submission: the eval, both experiments, the samples, latencies and token counts. The failures are reported as they happened.
+- **Every number in this README comes from a recorded run,** re-run on the final code before submission: the eval, all three experiments, the samples, latencies and token counts. The failures are reported as they happened.
