@@ -6,11 +6,12 @@ const fakeResponse = (question: string): AskResponse => ({
   question,
   answer: { code: 'await sdk.page.getSnapshot();', explanation: 'x', usedSymbols: ['PageController.getSnapshot'] },
   retrieval: { topK: 5, chunks: [] },
+  typecheck: { ok: true, errors: [] },
   meta: {
     model: 'm',
     embeddingModel: 'e',
     sdkVersion: '1.0.0',
-    latencyMs: { retrieve: 1, generate: 2 },
+    latencyMs: { retrieve: 1, generate: 2, typecheck: 3 },
     tokens: { input: 3, output: 4 },
   },
 });

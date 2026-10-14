@@ -35,6 +35,7 @@ export function buildApp(deps: AppDeps, logger: boolean = true): FastifyInstance
         model: response.meta.model,
         latencyMs: response.meta.latencyMs,
         tokens: response.meta.tokens,
+        typecheck: response.typecheck && { ok: response.typecheck.ok, errors: response.typecheck.errors.length },
         topSymbols: response.retrieval.chunks.map((chunk) => chunk.symbol),
       },
       'answered question',

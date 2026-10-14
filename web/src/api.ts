@@ -20,7 +20,8 @@ export interface AskResponse {
   question: string;
   answer: { code: string; explanation: string; usedSymbols: string[] };
   retrieval: { topK: number; chunks: RetrievedChunk[] };
-  typecheck?: TypecheckResult;
+  /** null when the model returned no code. */
+  typecheck: TypecheckResult | null;
   meta: {
     model: string;
     embeddingModel: string;
