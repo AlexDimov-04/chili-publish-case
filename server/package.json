@@ -8,7 +8,9 @@
     "fetch-sdk": "tsx src/ingest/fetch-sdk.ts",
     "ingest": "tsx src/ingest/index.ts",
     "dev": "tsx watch src/server.ts",
-    "start": "tsx src/server.ts"
+    "start": "tsx src/server.ts",
+    "eval": "tsx src/eval/run.ts",
+    "eval:e2e": "tsx src/eval/run.ts --e2e"
   },
   "devDependencies": {
     "@types/node": "26.6.5",

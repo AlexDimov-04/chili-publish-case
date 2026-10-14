@@ -1,0 +1,18 @@
+[
+  { "question": "I want to create a list variable with 4 items: Banana, Apple, Strawberry and Tomato", "expectedSymbols": ["VariableController.create", "VariableController.setListVariable"], "required": true },
+  { "question": "I want to create a snapshot of the currently active page", "expectedSymbols": ["PageController.getSnapshot"], "required": true },
+  { "question": "How can I make sure that my end-user can change the position of a frame?", "expectedSymbols": ["FrameConstraintController.setHorizontalMovement", "FrameConstraintController.setVerticalMovement"], "required": true },
+  { "question": "How do I change the text content of a text frame?", "expectedSymbols": ["ExperimentController.setText"] },
+  { "question": "List all layouts and select one of them", "expectedSymbols": ["LayoutController.getAll", "LayoutController.select"] },
+  { "question": "How can I get notified when the variables in the document change?", "expectedSymbols": ["ManagedCallbacksConfigType"] },
+  { "question": "Set the value of a short text variable to 'Hello'", "expectedSymbols": ["VariableController.setValue"] },
+  { "question": "Undo the last change the user made", "expectedSymbols": ["UndoManagerController.undo"] },
+  { "question": "Zoom the canvas so the whole page is visible", "expectedSymbols": ["CanvasController.zoomToPage"] },
+  { "question": "Add a new page to the document", "expectedSymbols": ["PageController.add"] },
+  { "question": "Change the page size to 1000 by 500", "expectedSymbols": ["PageController.setSize"] },
+  { "question": "Rotate a frame by 45 degrees", "expectedSymbols": ["FrameController.setRotation"] },
+  { "question": "Hide a frame so it is not visible", "expectedSymbols": ["FrameController.setVisibility"] },
+  { "question": "Make a variable mandatory for the end-user", "expectedSymbols": ["VariableController.setIsRequired"] },
+  { "question": "Save the current document as JSON", "expectedSymbols": ["DocumentController.getCurrentState"] },
+  { "question": "Find a frame by its name and change its width to 200", "expectedSymbols": ["FrameController.getByName", "FrameController.setWidth"] }
+]
