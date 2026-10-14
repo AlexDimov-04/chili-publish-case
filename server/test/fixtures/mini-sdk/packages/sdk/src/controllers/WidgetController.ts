@@ -1,4 +1,4 @@
-import type { Widget } from '../types/WidgetTypes';
+import type { Widget, WidgetKind } from '../types/WidgetTypes';
 
 export class WidgetController {
     #api = 'engine';
@@ -17,6 +17,13 @@ export class WidgetController {
      */
     rename = async (id: string, name: string): Promise<void> => {
         void [id, name, this.#api];
+    };
+
+    /**
+     * Changes the kind of a widget
+     */
+    setKind = async (id: string, kind?: WidgetKind | null) => {
+        void [id, kind];
     };
 
     /**

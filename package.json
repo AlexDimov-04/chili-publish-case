@@ -20,7 +20,8 @@
     "eval:e2e": "npm run eval:e2e -w server",
     "eval:hybrid": "npm run eval:hybrid -w server",
     "samples": "npm run samples -w server",
-    "eval:subquery": "npm run eval:subquery -w server"
+    "eval:subquery": "npm run eval:subquery -w server",
+    "eval:enum": "npm run eval:enum -w server"
   },
   "devDependencies": {
     "concurrently": "10.0.6"

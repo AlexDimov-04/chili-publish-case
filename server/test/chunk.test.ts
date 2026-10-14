@@ -18,11 +18,13 @@ describe('chunkSdk', () => {
     expect(methods.map((chunk) => chunk.apiPath)).toEqual([
       'sdk.widget.getAll',
       'sdk.widget.rename',
+      'sdk.widget.setKind',
       'sdk.widget.lock.lock',
     ]);
     expect(methods.map((chunk) => chunk.symbol)).toEqual([
       'WidgetController.getAll',
       'WidgetController.rename',
+      'WidgetController.setKind',
       'WidgetLockController.lock',
     ]);
   });
@@ -47,6 +49,13 @@ describe('chunkSdk', () => {
       ['// sdk.widget.getAll (WidgetController.getAll)', '/**', ' * Returns all widgets', ' */', 'getAll(): Promise<Widget[]>'].join('\n'),
     );
     expect(byId.get('method:WidgetController.rename')!.text).toContain('rename(id: string, name: string): Promise<void>');
+  });
+
+  it('appends enum values of enum-typed parameters only when asked to', () => {
+    const plain = byId.get('method:WidgetController.setKind')!.text;
+    const enriched = chunkSdk(root, { enumValues: true }).find((c) => c.id === 'method:WidgetController.setKind')!.text;
+    expect(plain).not.toContain('// WidgetKind:');
+    expect(enriched).toBe(`${plain}\n// WidgetKind: box`);
   });
 
   it('emits one chunk per exported interface, type alias and enum', () => {

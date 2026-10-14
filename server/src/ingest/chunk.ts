@@ -39,8 +39,13 @@ const CONTROLLER_GLOB = `${SDK_PACKAGE}/src/controllers/*.ts`;
 const TYPE_GLOBS = [`${SDK_PACKAGE}/src/types/*.ts`, `${SDK_PACKAGE}/src/utils/Enums.ts`];
 const RETURN_TYPE_FLAGS = TypeFormatFlags.NoTruncation | TypeFormatFlags.UseAliasDefinedOutsideCurrentScope;
 
+export interface ChunkOptions {
+  /** Append the values of enum-typed parameters to method chunks (e.g. VariableType: list, shortText, …). */
+  enumValues?: boolean;
+}
+
 /** Splits the pinned SDK source into one chunk per public controller method and one per exported type. */
-export function chunkSdk(repoRoot: string): Chunk[] {
+export function chunkSdk(repoRoot: string, options: ChunkOptions = {}): Chunk[] {
   const project = loadProject(repoRoot);
   const sdkFile = project.getSourceFileOrThrow(`${repoRoot}/${SDK_PACKAGE}/src/sdk.ts`);
   const controllerFiles = project.getSourceFiles(`${repoRoot}/${CONTROLLER_GLOB}`);
@@ -59,7 +64,7 @@ export function chunkSdk(repoRoot: string): Chunk[] {
           kind: 'method',
           symbol: `${className}.${name}`,
           apiPath: `${apiPath}.${name}`,
-          body: `${jsDocText(member)}${signature(member)}`,
+          body: `${jsDocText(member)}${signature(member)}${options.enumValues ? enumValueLines(member) : ''}`,
         }),
       );
     }
@@ -142,6 +147,24 @@ function signature(member: PropertyDeclaration | MethodDeclaration): string {
   const params = fn.getParameters().map((p) => p.getText()).join(', ');
   const returnType = fn.getReturnTypeNode()?.getText() ?? fn.getReturnType().getText(fn, RETURN_TYPE_FLAGS);
   return `${member.getName()}(${params}): ${returnType}`;
+}
+
+/**
+ * One line per enum-typed parameter listing the enum's values. Methods like create(parentId, type: VariableType)
+ * are generic over a subtype, so without this nothing in the chunk mentions e.g. "list".
+ */
+function enumValueLines(member: PropertyDeclaration | MethodDeclaration): string {
+  const fn = Node.isPropertyDeclaration(member) ? (member.getInitializer() as ArrowFunction) : member;
+  const lines = new Set<string>();
+  for (const param of fn.getParameters()) {
+    let declaration = param.getType().getNonNullableType().getSymbol()?.getDeclarations()[0];
+    // A single-member enum is typed as its one literal member; walk up to the enum itself.
+    if (declaration && Node.isEnumMember(declaration)) declaration = declaration.getParent();
+    if (declaration && Node.isEnumDeclaration(declaration)) {
+      lines.add(`// ${declaration.getName()}: ${declaration.getMembers().map((m) => m.getName()).join(', ')}`);
+    }
+  }
+  return [...lines].map((line) => `\n${line}`).join('');
 }
 
 function jsDocText(node: JSDocableNode): string {
