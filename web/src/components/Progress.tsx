@@ -43,7 +43,7 @@ export function Progress() {
       </div>
 
       <div className="mt-4 h-px bg-line">
-        <motion.div className="h-px origin-left bg-ink" animate={{ scaleX: fraction }} transition={{ ease: 'linear', duration: 0.1 }} />
+        <motion.div className="h-px origin-left bg-chili shadow-[0_0_10px_rgb(255_31_82)]" animate={{ scaleX: fraction }} transition={{ ease: 'linear', duration: 0.1 }} />
       </div>
 
       <ol className="mt-5 space-y-2.5">
@@ -54,10 +54,10 @@ export function Progress() {
             <li key={stage.label} className={clsx('flex items-center gap-3 text-sm transition-colors duration-500', done || running ? 'text-ink' : 'text-ink-faint')}>
               <span className="w-6 font-serif italic text-ink-faint">{NUMERALS[i]}.</span>
               <span className="flex-1">{stage.label}</span>
-              {done && <Check className="size-3.5 text-olive" strokeWidth={2.5} />}
+              {done && <Check className="size-3.5 text-pass" strokeWidth={2.5} />}
               {running && (
                 <motion.span
-                  className="size-1.5 rounded-full bg-sanguine"
+                  className="size-1.5 rounded-full bg-ember shadow-[0_0_8px_rgb(255_122_26)]"
                   animate={{ opacity: [1, 0.25, 1] }}
                   transition={{ duration: 1.4, repeat: Infinity }}
                 />

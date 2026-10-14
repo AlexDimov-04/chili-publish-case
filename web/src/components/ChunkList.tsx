@@ -12,7 +12,7 @@ function ChunkCard({ chunk, used, index }: { chunk: RetrievedChunk; used: boolea
   return (
     <motion.li
       variants={{ hidden: { opacity: 0, y: 8 }, show: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}
-      className={clsx('sheet overflow-hidden', used && 'border-l-2 border-l-sanguine')}
+      className={clsx('sheet overflow-hidden', used && 'border-l-2 border-l-chili')}
     >
       <button type="button" onClick={() => setOpen((v) => !v)} aria-expanded={open} className="w-full px-4 pt-3.5 pb-3 text-left">
         <div className="flex items-start gap-3">
@@ -21,7 +21,7 @@ function ChunkCard({ chunk, used, index }: { chunk: RetrievedChunk; used: boolea
             <p className="break-all font-mono text-[13px] leading-5">{chunk.apiPath ?? chunk.symbol}</p>
             <p className="mt-1 text-[11px] text-ink-faint">
               <span className="small-caps">{chunk.kind}</span>
-              {used && <span className="small-caps ml-2 text-sanguine">· used in the answer</span>}
+              {used && <span className="small-caps ml-2 text-chili">· used in the answer</span>}
             </p>
           </div>
           <motion.span animate={{ rotate: open ? 180 : 0 }} className="text-ink-faint">
@@ -32,7 +32,7 @@ function ChunkCard({ chunk, used, index }: { chunk: RetrievedChunk; used: boolea
         <div className="mt-3 flex items-center gap-3 pl-8">
           <div className="h-px flex-1 bg-line" title="Cosine similarity">
             <motion.div
-              className={clsx('h-px origin-left', used ? 'bg-sanguine' : 'bg-ink-soft')}
+              className={clsx('h-px origin-left', used ? 'bg-chili' : 'bg-ink-soft')}
               initial={{ scaleX: 0 }}
               animate={{ scaleX: chunk.score }}
               transition={{ duration: 1, delay: 0.25 + index * 0.08, ease: [0.22, 1, 0.36, 1] }}

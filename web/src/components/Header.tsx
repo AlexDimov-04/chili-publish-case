@@ -1,16 +1,7 @@
 import clsx from 'clsx';
 import { useHealth } from '../hooks/useHealth';
+import { ChiliMark } from './ChiliMark';
 
-/** Circle-in-square mark, after the Vitruvian proportions in the background drawing. */
-function Mark() {
-  return (
-    <svg viewBox="0 0 32 32" className="size-8 text-ink" fill="none" stroke="currentColor" strokeWidth="1.3">
-      <rect x="5" y="5" width="22" height="22" />
-      <circle cx="16" cy="17.2" r="12.4" />
-      <circle cx="16" cy="17.2" r="1.6" className="fill-sanguine text-sanguine" />
-    </svg>
-  );
-}
 
 export function Header() {
   const health = useHealth();
@@ -19,10 +10,10 @@ export function Header() {
   return (
     <header className="flex items-center justify-between gap-4 border-b border-line py-4">
       <div className="flex items-center gap-3">
-        <Mark />
+        <ChiliMark className="h-8 w-8 drop-shadow-[0_0_12px_rgb(255_0_72/0.5)]" />
         <div className="leading-none">
           <p className="font-serif text-lg font-medium tracking-tight">Studio SDK Assistant</p>
-          <p className="small-caps mt-1 text-[11px] text-ink-faint">chili grafx</p>
+          <p className="small-caps mt-1 text-[11px] text-ink-faint">for chili publish</p>
         </div>
       </div>
 
@@ -30,7 +21,7 @@ export function Header() {
         className="flex shrink-0 items-center gap-2 whitespace-nowrap text-xs text-ink-soft"
         title={online ? `Model ${health?.model}` : 'Start the API with `npm run dev`; build the index with `npm run ingest`'}
       >
-        <span className={clsx('size-1.5 rounded-full', online ? 'bg-olive' : health ? 'bg-sanguine' : 'bg-ink-faint')} />
+        <span className={clsx('size-1.5 rounded-full', online ? 'bg-pass' : health ? 'bg-chili' : 'bg-ink-faint')} />
         {health === null ? (
           'connecting'
         ) : online ? (

@@ -1,31 +1,19 @@
 @import 'tailwindcss';
 
-/* A notebook page: parchment and ink, one accent (sanguine, Leonardo's red chalk), muted olive/ochre for states. */
+/* Hot and spicy: charcoal, CHILI publish red, ember orange, a touch of gold. Dark only: fire needs the dark. */
 :root {
-  --paper: #f3eee3;
-  --sheet: rgb(250 247 240 / 0.86);
-  --ink: #221e18;
-  --ink-soft: #6b6256;
-  --ink-faint: #a39a8c;
-  --line: #ddd4c4;
-  --sanguine: #9a4430;
-  --olive: #5e6b3c;
-  --ochre: #a8792a;
-  --code: #ece5d7;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --paper: #13110e;
-    --sheet: rgb(26 23 19 / 0.86);
-    --ink: #ece5d8;
-    --ink-soft: #a69d8f;
-    --ink-faint: #6f675c;
-    --line: #2e2923;
-    --sanguine: #d0745a;
-    --olive: #a3b27c;
-    --ochre: #d4a656;
-    --code: #1b1814;
-  }
+  color-scheme: dark;
+  --paper: #0c0807;
+  --sheet: rgb(22 13 11 / 0.72);
+  --ink: #f7ede7;
+  --ink-soft: #c9b2a8;
+  --ink-faint: #85695f;
+  --line: rgb(255 110 70 / 0.16);
+  --chili: #ff1f52;
+  --ember: #ff7a1a;
+  --gold: #ffc35a;
+  --pass: #9fd27e;
+  --code: rgb(10 6 5 / 0.85);
 }
 
 @theme {
@@ -39,28 +27,28 @@
   --color-ink-soft: var(--ink-soft);
   --color-ink-faint: var(--ink-faint);
   --color-line: var(--line);
-  --color-sanguine: var(--sanguine);
-  --color-olive: var(--olive);
-  --color-ochre: var(--ochre);
+  --color-chili: var(--chili);
+  --color-ember: var(--ember);
+  --color-gold: var(--gold);
+  --color-pass: var(--pass);
   --color-code: var(--code);
 }
 
 @layer base {
   html {
-    color-scheme: light dark;
     -webkit-font-smoothing: antialiased;
   }
   body {
     @apply bg-paper font-sans text-ink;
   }
   ::selection {
-    background: color-mix(in srgb, var(--sanguine) 22%, transparent);
+    background: color-mix(in srgb, var(--chili) 35%, transparent);
   }
 }
 
 @utility sheet {
-  @apply rounded-lg border border-line bg-sheet backdrop-blur-[2px];
-  box-shadow: 0 1px 0 rgb(0 0 0 / 0.02), 0 12px 32px -18px rgb(34 30 24 / 0.18);
+  @apply rounded-lg border border-line bg-sheet backdrop-blur-md;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.2), 0 18px 40px -20px rgb(0 0 0 / 0.8), inset 0 1px 0 rgb(255 180 140 / 0.05);
 }
 
 @utility small-caps {

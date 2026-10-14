@@ -18,7 +18,7 @@ export function HowItWorks() {
     >
       {STEPS.map(({ numeral, title, text }) => (
         <motion.div key={title} variants={{ hidden: { opacity: 0, y: 8 }, show: { opacity: 1, y: 0, transition: { duration: 0.7 } } }}>
-          <p className="font-serif text-2xl italic text-sanguine">{numeral}.</p>
+          <p className="font-serif text-2xl italic text-chili">{numeral}.</p>
           <h3 className="mt-1 font-serif text-xl font-medium">{title}</h3>
           <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">{text}</p>
         </motion.div>
@@ -34,13 +34,13 @@ export function ErrorCard({ message, onRetry }: { message: string; onRetry: () =
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0 }}
       role="alert"
-      className="sheet mx-auto flex max-w-xl items-start gap-4 border-l-2 border-l-sanguine p-5"
+      className="sheet mx-auto flex max-w-xl items-start gap-4 border-l-2 border-l-chili p-5"
     >
       <div className="flex-1">
         <p className="font-serif text-lg italic">Something went wrong.</p>
         <p className="mt-1 text-sm text-ink-soft">{message}</p>
       </div>
-      <button type="button" onClick={onRetry} className="inline-flex items-center gap-1.5 text-sm text-ink-soft transition-colors hover:text-sanguine">
+      <button type="button" onClick={onRetry} className="inline-flex items-center gap-1.5 text-sm text-ink-soft transition-colors hover:text-chili">
         <RotateCcw className="size-3.5" /> Retry
       </button>
     </motion.div>

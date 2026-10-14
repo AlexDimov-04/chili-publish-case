@@ -5,7 +5,7 @@ import { Composer, ExampleChips } from './components/Composer';
 import { Header } from './components/Header';
 import { Progress } from './components/Progress';
 import { ResultView } from './components/ResultView';
-import { Sketch } from './components/Sketch';
+import { Backdrop } from './components/Backdrop';
 import { ErrorCard, HowItWorks } from './components/States';
 
 export function App() {
@@ -42,7 +42,7 @@ export function App() {
 
   return (
     <div className="relative min-h-dvh">
-      <Sketch />
+      <Backdrop />
       <div className="mx-auto w-full max-w-6xl px-4 pb-20 sm:px-6 lg:px-8">
         <Header />
 
@@ -53,7 +53,7 @@ export function App() {
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="text-center font-serif text-4xl font-medium leading-[1.1] tracking-tight text-balance sm:text-6xl"
           >
-            Studio SDK code, <em className="font-normal text-sanguine">drawn from the source.</em>
+            Studio SDK code, <em className="font-normal text-chili [text-shadow:0_0_32px_rgb(255_31_82/0.45)]">served hot from the source.</em>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
@@ -85,7 +85,7 @@ export function App() {
         </main>
 
         <footer className="mt-20 border-t border-line pt-5 text-center font-serif text-sm italic text-ink-faint">
-          Grounded in the @chili-publish/studio-sdk source; every source links to GitHub.
+          Cooked from the @chili-publish/studio-sdk source; every source links to GitHub.
         </footer>
       </div>
     </div>

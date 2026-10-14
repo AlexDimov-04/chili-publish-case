@@ -30,7 +30,7 @@ export function Composer({ value, loading, onChange, onAsk }: Props) {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, delay: 0.25, ease }}
-      className="sheet p-1.5 transition-colors focus-within:border-ink-faint"
+      className="sheet p-1.5 transition-[border-color,box-shadow] duration-300 focus-within:border-chili/50 focus-within:shadow-[0_0_0_1px_rgb(255_31_82/0.25),0_0_40px_-8px_rgb(255_60_20/0.45)]"
     >
       <label htmlFor="question" className="sr-only">
         Your question about the Studio SDK
@@ -55,7 +55,7 @@ export function Composer({ value, loading, onChange, onAsk }: Props) {
         <button
           type="submit"
           disabled={loading || !value.trim()}
-          className="inline-flex items-center gap-2 rounded-md bg-ink px-4 py-2 text-sm font-medium text-paper transition-colors hover:bg-sanguine disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-ink"
+          className="inline-flex items-center gap-2 rounded-md bg-chili px-4 py-2 text-sm font-medium text-white shadow-[0_0_24px_-6px_rgb(255_31_82/0.9)] transition-[background-color,box-shadow] hover:bg-ember hover:shadow-[0_0_28px_-4px_rgb(255_122_26/0.9)] disabled:cursor-not-allowed disabled:opacity-35 disabled:shadow-none disabled:hover:bg-chili"
         >
           {loading ? <Loader2 className="size-4 animate-spin" /> : <ArrowUp className="size-4" />}
           {loading ? 'Working' : 'Ask'}
@@ -82,7 +82,7 @@ export function ExampleChips({ disabled, onPick }: { disabled: boolean; onPick: 
           disabled={disabled}
           onClick={() => onPick(question)}
           variants={{ hidden: { opacity: 0 }, show: { opacity: 1, transition: { duration: 0.6 } } }}
-          className="rounded-full border border-line px-3 py-1 font-serif text-[15px] italic text-ink-soft transition-colors hover:border-ink-faint hover:text-ink disabled:opacity-40"
+          className="rounded-full border border-line bg-sheet px-3 py-1 font-serif text-[15px] italic text-ink-soft backdrop-blur-md transition-colors hover:border-chili/60 hover:text-ink disabled:opacity-40"
         >
           {label}
         </motion.button>
