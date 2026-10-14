@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <img alt="Node 24+" src="https://img.shields.io/badge/node-%E2%89%A524-ff1f52?style=flat-square&labelColor=1a100d">
+  <img alt="Node 22.12+" src="https://img.shields.io/badge/node-%E2%89%A522.12-ff1f52?style=flat-square&labelColor=1a100d">
   <img alt="TypeScript strict" src="https://img.shields.io/badge/TypeScript-strict-ff7a1a?style=flat-square&labelColor=1a100d">
   <img alt="LanceDB local" src="https://img.shields.io/badge/vector%20store-LanceDB%20(local)-ffc35a?style=flat-square&labelColor=1a100d">
   <img alt="studio-sdk 1.48.0" src="https://img.shields.io/badge/studio--sdk-1.48.0-ff0048?style=flat-square&labelColor=1a100d">
@@ -44,13 +44,13 @@ A small RAG application that writes **TypeScript for the CHILI GraFx Studio SDK*
 | **Models** | `text-embedding-3-small` for embeddings · `gpt-6.1-sol` for generation (structured JSON output) |
 | **Retrieval** | exact cosine top-5 · `score = max(0, 1 − cosine distance)` |
 | **Check** | every snippet compiled against `@chili-publish/studio-sdk@1.48.0` with `strict` |
-| **Retrieval eval** | 16 cases · **hit@5 1.00 · MRR 0.81 · recall@5 0.94** |
+| **Retrieval eval** | 16 cases · **hit@5 1.00 · MRR 0.81 · recall@5 0.94** · two candidate improvements tested and rejected by the eval (hybrid search, sub-queries) |
 | **End to end** | code generated for 14/16 eval questions · **type-check passed 14/14** · the other 2 declined instead of guessing |
 | **Cost** | full ingest ≈ 59k embedding tokens (well under one cent) · a question ≈ 1k input / 100–300 output tokens |
 
 ## Quick start
 
-**Requirements:** Node.js **24+** (current LTS), npm, git, and an OpenAI API key.
+**Requirements:** Node.js **22.12+** (verified on 22.12 and 26), npm, git, and an OpenAI API key.
 
 ```bash
 cp .env.example .env        # then set OPENAI_API_KEY
@@ -81,7 +81,7 @@ curl -s -X POST localhost:3001/api/ask \
   "question": "I want to create a snapshot of the currently active page",
   "answer": {
     "code": "const snapshot = await sdk.page.getSnapshot();",
-    "explanation": "Omitting the page ID creates a PNG snapshot of the currently active page using default settings. The result is a Uint8Array returned directly, not wrapped in .parsedData.",
+    "explanation": "Omitting the page ID captures the currently active page using the default snapshot settings. The result is a Uint8Array containing PNG image data, returned directly rather than in .parsedData.",
     "usedSymbols": ["PageController.getSnapshot"]
   },
   "retrieval": {
@@ -109,8 +109,8 @@ curl -s -X POST localhost:3001/api/ask \
     "model": "gpt-6.1-sol",
     "embeddingModel": "text-embedding-3-small",
     "sdkVersion": "1.48.0",
-    "latencyMs": { "retrieve": 171, "generate": 3838, "typecheck": 200 },
-    "tokens": { "input": 1080, "output": 67 }
+    "latencyMs": { "retrieve": 243, "generate": 4858, "typecheck": 203 },
+    "tokens": { "input": 1080, "output": 69 }
   }
 }
 ```
@@ -129,6 +129,7 @@ curl -s -X POST localhost:3001/api/ask \
 | `npm run eval` | retrieval eval: hit@5, MRR, recall@5 → `eval/results.md` | yes |
 | `npm run eval:e2e` | the same plus generation and type-check pass rate | yes |
 | `npm run eval:hybrid` | the hybrid-retrieval experiment → `eval/hybrid-results.md` | yes |
+| `npm run eval:subquery` | the sub-query experiment (12 variants × 3 runs) → `eval/subquery-results.md` | yes |
 | `npm run samples` | sends the sample questions to the running API → `docs/samples.md` | yes |
 
 Environment variables (see [`.env.example`](.env.example)):
@@ -289,7 +290,7 @@ All outputs below are **unedited**, recorded by `npm run samples` against the ru
 
 **Result: no code (declined).** Type-check: not run.
 
-> The provided context does not include a method to create a variable, so I cannot provide a complete snippet to create the list variable. VariableController.setListVariable can set the items to ["Banana", "Apple", "Strawberry", "Tomato"] on an existing list variable, but it requires that variable's ID.
+> The provided context includes sdk.variable.setListVariable, which updates the items of an existing list variable, but no method for creating a variable. Creating a new list variable with Banana, Apple, Strawberry, and Tomato requires a creation method that is not included in this context.
 
 | # | Score | Retrieved | Source |
 |---|---|---|---|
@@ -318,7 +319,7 @@ if (id) await sdk.variable.setListVariable(id, ['Banana', 'Apple', 'Strawberry',
 const snapshot = await sdk.page.getSnapshot();
 ```
 
-> Omitting the page ID creates a PNG snapshot of the currently active page using default settings. The result is a Uint8Array returned directly, not wrapped in .parsedData.
+> Omitting the page ID captures the currently active page using the default snapshot settings. The result is a Uint8Array containing PNG image data, returned directly rather than in .parsedData.
 
 | # | Score | Retrieved | Source |
 |---|---|---|---|
@@ -335,12 +336,11 @@ The model also noticed, from the compiler-inferred return type in the chunk, tha
 **Result: code, type-check passed ✅, but only half the answer ⚠️**
 
 ```ts
-const frameId = "YOUR_FRAME_ID"; // TODO: Replace with the ID of the frame your end-user should move.
-
+const frameId = 'YOUR_FRAME_ID'; // TODO: Replace with the ID of the frame to make movable.
 await sdk.frame.constraints.setHorizontalMovement(frameId, true);
 ```
 
-> This allows the end-user to change the frame's horizontal position when the editor uses FrameEditingMode.followConstraints. It assumes the frame is selectable. The supplied context does not include methods to enable vertical movement or configure the editing mode, so this alone does not guarantee movement in both directions.
+> This allows the end-user to move the specified frame horizontally when editing in followConstraints mode, assuming the frame is selectable. Vertical movement is a separate constraint; the provided context does not include a method to enable it or to change the editing mode.
 
 | # | Score | Retrieved | Source |
 |---|---|---|---|
@@ -365,8 +365,10 @@ await sdk.frame.constraints.setHorizontalMovement(frameId, true);
 <summary><b>4 · Change the text content of a text frame</b> (type-check passed)</summary>
 
 ```ts
-const textFrameId = "YOUR_TEXT_FRAME_ID"; // TODO: Replace with the target text frame's ID.
-await sdk.experiment.setText(textFrameId, "Your new text content");
+const frameId = "YOUR_TEXT_FRAME_ID"; // TODO: Replace with the target text frame's ID.
+const newText = "Updated text content";
+
+await sdk.experiment.setText(frameId, newText);
 ```
 </details>
 
@@ -375,9 +377,13 @@ await sdk.experiment.setText(textFrameId, "Your new text content");
 
 ```ts
 const layouts = (await sdk.layout.getAll()).parsedData;
+if (!layouts) {
+  throw new Error("Could not retrieve layouts.");
+}
+
 console.log(layouts);
 
-const instagramLayout = layouts?.find(layout => layout.name === "Instagram");
+const instagramLayout = layouts.find((layout) => layout.name === "Instagram");
 if (!instagramLayout) {
   throw new Error('No layout named "Instagram" was found.');
 }
@@ -389,7 +395,7 @@ await sdk.layout.select(instagramLayout.id);
 <details>
 <summary><b>6 · Find the frame "Logo", set width 200</b> (declined)</summary>
 
-> The context provides sdk.frame.setWidth, but no method to list frames or find a frame by name. Finding the frame named "Logo" requires additional SDK context; once its ID is available, its width can be set to "200" (pixels).
+> The provided context includes sdk.frame.setWidth, but no method for finding a frame by name or listing frames. I cannot find the frame named "Logo" and set its width to 200 without an additional lookup method.
 
 All five retrieved chunks were width-related (`setWidth`, `setAutoGrowMinWidth`, …). The eval question *"Find a frame **by its name** and change its width to 200"* does retrieve `getByName` at rank 1, so retrieval is also sensitive to phrasing.
 </details>
@@ -397,7 +403,7 @@ All five retrieved chunks were width-related (`setWidth`, `setAutoGrowMinWidth`,
 <details>
 <summary><b>7 · Get notified when variables change</b> (declined)</summary>
 
-> The provided context exposes `ManagedCallbacksConfigType.events.onVariableListChanged`, whose callback receives the updated `Variable[]` list. However, it does not include a method for registering event listeners, so I cannot provide a working subscription snippet without guessing an SDK API.
+> The relevant event is ManagedCallbacksConfigType.events.onVariableListChanged, whose callback receives a Variable[] list. However, the provided context does not include a method for registering that callback, so I cannot provide a working subscription snippet without guessing an SDK API.
 
 The real call is `sdk.config.events.onVariableListChanged.registerCallback(…)`, and `registerCallback` lives in `utils/EngineEvent.ts`, outside the ingested subset. This is a scope gap, not a retrieval or model failure.
 </details>
@@ -435,6 +441,33 @@ The two misses look like a textbook case for adding keyword search, since "creat
 </p>
 
 **Every hybrid variant was worse on every metric.** Words like *create*, *variable*, *frame* and *page* appear in dozens of method names and docs, so BM25 rewards the wrong matches and pushes correct vector results out of the top 5. Even `setHorizontalMovement` dropped out. The rule was "keep only if recall goes up and MRR does not drop", so **retrieval stays vector-only**. The script and the numbers stay in the repo so the decision can be reproduced ([`eval/hybrid-results.md`](eval/hybrid-results.md)).
+
+### A second change the eval rejected: sub-queries
+
+Every miss is a question with two parts, so the next idea was to **split the question into sub-queries before retrieval** ([`server/src/eval/subquery-experiment.ts`](server/src/eval/subquery-experiment.ts), `npm run eval:subquery`):
+- **Decompose:** an LLM splits the question into 1–3 standalone operations.
+- **Retrieve:** the original question and each sub-query are searched, top 5 each.
+- **Merge into 5:** round-robin by rank, by max cosine (which keeps the score honest), or with a quota that guarantees each sub-query's best hit.
+- **Setup:** two decomposer models (`gpt-5.4-mini`, `gpt-6.1-sol`), two prompt versions, and **3 runs per variant**, because the decomposition itself varies.
+
+| Best variant per prompt (means of 3 runs) | hit@5 | MRR | recall@5 | `variable.create` | `setVerticalMovement` |
+|---|---|---|---|---|---|
+| **vector only (shipped)** | **1.00** | 0.81 | 0.94 | missed | missed |
+| v1 · gpt-6.1-sol · max cosine | 1.00 | **0.87** ± 0.02 | 0.96 ± 0.02 | missed 3/3 | missed 1/3 |
+| v2 "name operations generically" · gpt-6.1-sol · max cosine | 0.92 | 0.85 | 0.92 | **found 3/3** | missed 3/3 (and horizontal lost) |
+
+**Why it was not shipped:**
+- **v1** raises MRR, but its recall gain is within its own run-to-run spread, and **it fixes neither required question.**
+- It also adds a second model call (+2–5 s), and its randomness makes the **retrieved sources change from run to run.** That cuts against the transparency the brief asks for.
+- **v2** was written *after* diagnosing v1 on the same 16 cases, so it risks overfitting to them. It fixes `create` but rewrites the frame question into something that loses both movement methods.
+
+The full table is in [`eval/subquery-results.md`](eval/subquery-results.md).
+
+**What the diagnosis found** is more useful than the experiment itself:
+- `create(parentId, type)` is **generic over the variable type**, so the word *list* pulls the search toward `ListVariable` declarations. The plain query "create a variable" puts `create` at **rank 1**.
+- Likewise, "move a frame vertically" puts `setVerticalMovement` at **rank 1**; the decomposer simply never split "position" into two axes.
+
+That points to fixing the **document side** rather than the query (see [more time](#what-i-would-do-with-more-time)).
 
 **Limits of this eval:** 16 cases and one run each. That is directional, not statistically solid; generation in particular varies between runs.
 
@@ -485,13 +518,13 @@ Every answered request writes one structured JSON line (pino, through Fastify), 
 │  │  ├─ check/typecheck.ts     compile the snippet against @chili-publish/studio-sdk
 │  │  ├─ ask.ts                 retrieve → generate → type-check, timings, tokens
 │  │  ├─ app.ts / server.ts     routes, validation, structured logging
-│  │  ├─ eval/                  run.ts, metrics.ts, hybrid-experiment.ts
+│  │  ├─ eval/                  run.ts, metrics.ts, hybrid-experiment.ts, subquery-experiment.ts
 │  │  └─ samples.ts             records docs/samples.md from the running API
 │  └─ test/                     28 unit tests, no network (fixture SDK, temp LanceDB)
 ├─ web/                         React 19 + Vite 8 + Tailwind 4
 │  └─ src/components/           Composer, Progress, CodeCard, ChunkList, ResultView,
 │                               ChiliLogo3D (three.js, lazy), Embers (canvas), Backdrop
-├─ eval/                        retrieval-cases.json, results.md, hybrid-results.md
+├─ eval/                        retrieval-cases.json, results.md, hybrid-results.md, subquery-results.md
 ├─ docs/                        samples.md, images/
 └─ data/                        (gitignored) cloned SDK source + LanceDB files
 ```
@@ -504,7 +537,7 @@ Every answered request writes one structured JSON line (pino, through Fastify), 
 | **AST chunks**, one per method or type, headed by the `sdk.` path | the method is the unit of correctness; scores mean something; exact names are searchable | needed SDK-specific handling (arrow properties, nested controllers, `@ignore`) |
 | **LanceDB embedded** | a real local vector store with no server or Docker | single process; Qdrant or pgvector when there are several instances or a bigger corpus |
 | **Exact search**, no ANN index | 860 rows scan in milliseconds, with perfect recall for the given embedding | doesn't scale to millions of chunks (it doesn't need to) |
-| **Vector-only retrieval** | the eval rejected all five hybrid variants | two-part questions still miss their second half |
+| **Vector-only retrieval** | the eval rejected all five hybrid variants and the sub-query decomposition (12 variants × 3 runs) | two-part questions still miss their second half |
 | **Cosine similarity clipped to [0, 1]** as the score | honest: an unrelated chunk reads as ≈ 0, not 0.5 | absolute values look modest (0.3–0.5) for good matches |
 | **Strict grounding**: decline instead of guess | a wrong API call is worse than "I don't have that method" | required question 1 returns no code until retrieval finds `create` |
 | **Structured output** with a zod schema | no markdown parsing; one schema validates both request and reply | ties generation to models with JSON-schema support |
@@ -512,12 +545,12 @@ Every answered request writes one structured JSON line (pino, through Fastify), 
 | **Type-check against the npm package** | directly tests "correct SDK calls" | proves existence and types, not intent |
 | **No LangChain / LlamaIndex**, direct SDK calls | every step is visible and defendable in the interview | a little more code |
 | **No streaming** | the response must carry chunks and the type-check result anyway | the user waits; the progress panel says what is happening |
-| **Pinned dependencies, latest versions** (TS 7, Vite 8, React 19, Node 24) | reproducible installs; current tooling | TS 7 lacks the in-process API, so the checker uses ts-morph's TS 6 |
+| **Pinned dependencies, latest versions** (TS 7, Vite 8, React 19; Node 22.12+) | reproducible installs; current tooling | TS 7 lacks the in-process API, so the checker uses ts-morph's TS 6 |
 | **A designed UI**, built after the pipeline was measured | it shows care for the end user; three.js is lazy-loaded and reduced motion is respected | more frontend code than "simple" needed; dark theme only |
 
 ## What I would do with more time
 
-1. **Split two-part questions into sub-queries** before retrieval: ask a small model to break the question into steps, retrieve for each, and merge into the top 5. That targets 3 of the 4 misses directly. Measure it with the existing eval and keep it only if recall@5 goes up without MRR dropping, as with the hybrid experiment.
+1. **Enrich method chunks at ingest instead of rewriting queries.** The sub-query diagnosis showed `create(parentId, type)` is missed because it is generic: nothing in its chunk says *list*. Inlining the members of the enums a method takes (here `VariableType`: list, shortText, image, …) and a one-line "what it is used for" into each method chunk would let "create a list variable" match `create` directly. Deterministic, no extra model call at query time, and measurable with the same eval.
 2. **Widen the corpus where the eval points to gaps:** `utils/EngineEvent.ts` (event subscriptions), then the website guides, which hold conceptual knowledge that signatures don't.
 3. **Add a repair loop:** when the type-check fails, send the compiler errors back once and ask for a fix.
 4. **Evaluate behaviour, not just compilation:** a larger eval set with repeated runs to separate signal from noise, plus an LLM-judged or human-reviewed answer score with the expected snippet as the reference.
@@ -538,6 +571,7 @@ I wrote a build plan first: requirements checklist, architecture, commit plan, q
   - the corpus and its exclusions (`src/next/` out);
   - `sdk` as the snippet variable name;
   - pinning everything to the latest versions;
-  - trying hybrid retrieval, then dropping it because of the eval;
+  - trying hybrid retrieval and then sub-query decomposition, and dropping both because the eval did not show a real improvement;
+  - lowering the Node floor to 22.12 (verified on a real Node 22.12 binary), so a reviewer on the LTS line can run it;
   - the UI direction, through three iterations: plain, a minimal "notebook" style, and the CHILI publish fire theme with the 3D mark.
-- **Every number in this README comes from a recorded run.** That covers the eval, the hybrid experiment, the samples, latencies and token counts. The failures are reported as they happened.
+- **Every number in this README comes from a recorded run,** re-run on the final code before submission: the eval, both experiments, the samples, latencies and token counts. The failures are reported as they happened.

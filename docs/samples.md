@@ -8,7 +8,7 @@ Recorded with `npm run samples` against the running API on 2026-10-14. Outputs a
 
 _No code: the model reported that the retrieved context was insufficient._
 
-**Explanation:** The provided context does not include a method to create a variable, so I cannot provide a complete snippet to create the list variable. VariableController.setListVariable can set the items to ["Banana", "Apple", "Strawberry", "Tomato"] on an existing list variable, but it requires that variable’s ID.
+**Explanation:** The provided context includes sdk.variable.setListVariable, which updates the items of an existing list variable, but no method for creating a variable. Creating a new list variable with Banana, Apple, Strawberry, and Tomato requires a creation method that is not included in this context.
 
 **Used symbols:** none
 
@@ -22,7 +22,7 @@ _No code: the model reported that the retrieved context was insufficient._
 | 4 | 0.32 | `VariableType` | enum | [types/VariableTypes.ts:33-44](https://github.com/chili-publish/studio-sdk/blob/1.48.0/packages/sdk/src/types/VariableTypes.ts#L33-L44) |
 | 5 | 0.32 | `DataSourceVariableDisplayOptionsList` | interface | [types/VariableTypes.ts:357-360](https://github.com/chili-publish/studio-sdk/blob/1.48.0/packages/sdk/src/types/VariableTypes.ts#L357-L360) |
 
-<sub>gpt-6.1-sol · text-embedding-3-small · studio-sdk 1.48.0 · latency retrieve 237 ms, generate 4566 ms, typecheck 0 ms · 831 in / 103 out tokens</sub>
+<sub>gpt-6.1-sol · text-embedding-3-small · studio-sdk 1.48.0 · latency retrieve 1598 ms, generate 3450 ms, typecheck 0 ms · 831 in / 71 out tokens</sub>
 
 ---
 
@@ -34,7 +34,7 @@ _No code: the model reported that the retrieved context was insufficient._
 const snapshot = await sdk.page.getSnapshot();
 ```
 
-**Explanation:** Omitting the page ID creates a PNG snapshot of the currently active page using default settings. The result is a Uint8Array returned directly, not wrapped in .parsedData.
+**Explanation:** Omitting the page ID captures the currently active page using the default snapshot settings. The result is a Uint8Array containing PNG image data, returned directly rather than in .parsedData.
 
 **Used symbols:** `PageController.getSnapshot`
 
@@ -48,7 +48,7 @@ const snapshot = await sdk.page.getSnapshot();
 | 4 | 0.35 | `SnapshotSettings` | interface | [types/PageTypes.ts:18-35](https://github.com/chili-publish/studio-sdk/blob/1.48.0/packages/sdk/src/types/PageTypes.ts#L18-L35) |
 | 5 | 0.34 | `sdk.page.duplicate` | method | [controllers/PageController.ts:74-83](https://github.com/chili-publish/studio-sdk/blob/1.48.0/packages/sdk/src/controllers/PageController.ts#L74-L83) |
 
-<sub>gpt-6.1-sol · text-embedding-3-small · studio-sdk 1.48.0 · latency retrieve 171 ms, generate 3838 ms, typecheck 200 ms · 1080 in / 67 out tokens</sub>
+<sub>gpt-6.1-sol · text-embedding-3-small · studio-sdk 1.48.0 · latency retrieve 243 ms, generate 4858 ms, typecheck 203 ms · 1080 in / 69 out tokens</sub>
 
 ---
 
@@ -57,12 +57,11 @@ const snapshot = await sdk.page.getSnapshot();
 **Type-check:** passed
 
 ```ts
-const frameId = "YOUR_FRAME_ID"; // TODO: Replace with the ID of the frame your end-user should move.
-
+const frameId = 'YOUR_FRAME_ID'; // TODO: Replace with the ID of the frame to make movable.
 await sdk.frame.constraints.setHorizontalMovement(frameId, true);
 ```
 
-**Explanation:** This allows the end-user to change the frame’s horizontal position when the editor uses FrameEditingMode.followConstraints. It assumes the frame is selectable. The supplied context does not include methods to enable vertical movement or configure the editing mode, so this alone does not guarantee movement in both directions.
+**Explanation:** This allows the end-user to move the specified frame horizontally when editing in followConstraints mode, assuming the frame is selectable. Vertical movement is a separate constraint; the provided context does not include a method to enable it or to change the editing mode.
 
 **Used symbols:** `FrameConstraintController.setHorizontalMovement`
 
@@ -76,7 +75,7 @@ await sdk.frame.constraints.setHorizontalMovement(frameId, true);
 | 4 | 0.39 | `sdk.frame.constraints.setHorizontalMovement` | method | [controllers/FrameController.ts:1387-1399](https://github.com/chili-publish/studio-sdk/blob/1.48.0/packages/sdk/src/controllers/FrameController.ts#L1387-L1399) |
 | 5 | 0.38 | `EndFrameAnchor` | type | [types/FrameTypes.ts:467-471](https://github.com/chili-publish/studio-sdk/blob/1.48.0/packages/sdk/src/types/FrameTypes.ts#L467-L471) |
 
-<sub>gpt-6.1-sol · text-embedding-3-small · studio-sdk 1.48.0 · latency retrieve 166 ms, generate 7389 ms, typecheck 33 ms · 965 in / 213 out tokens</sub>
+<sub>gpt-6.1-sol · text-embedding-3-small · studio-sdk 1.48.0 · latency retrieve 206 ms, generate 9018 ms, typecheck 40 ms · 965 in / 253 out tokens</sub>
 
 ---
 
@@ -85,11 +84,13 @@ await sdk.frame.constraints.setHorizontalMovement(frameId, true);
 **Type-check:** passed
 
 ```ts
-const textFrameId = "YOUR_TEXT_FRAME_ID"; // TODO: Replace with the target text frame's ID.
-await sdk.experiment.setText(textFrameId, "Your new text content");
+const frameId = "YOUR_TEXT_FRAME_ID"; // TODO: Replace with the target text frame's ID.
+const newText = "Updated text content";
+
+await sdk.experiment.setText(frameId, newText);
 ```
 
-**Explanation:** Use sdk.experiment.setText with the text frame ID and the replacement text. This assumes the target text frame already exists; replace the placeholder ID with its actual ID.
+**Explanation:** Use sdk.experiment.setText to replace a text frame’s content. This assumes you know the target text frame’s ID; replace the placeholder with that ID and set newText to your desired content.
 
 **Used symbols:** `ExperimentController.setText`
 
@@ -103,7 +104,7 @@ await sdk.experiment.setText(textFrameId, "Your new text content");
 | 4 | 0.46 | `sdk.tool.setTextFrame` | method | [controllers/ToolController.ts:69-74](https://github.com/chili-publish/studio-sdk/blob/1.48.0/packages/sdk/src/controllers/ToolController.ts#L69-L74) |
 | 5 | 0.45 | `TextFrame` | interface | [types/DocumentTypes.ts:113-131](https://github.com/chili-publish/studio-sdk/blob/1.48.0/packages/sdk/src/types/DocumentTypes.ts#L113-L131) |
 
-<sub>gpt-6.1-sol · text-embedding-3-small · studio-sdk 1.48.0 · latency retrieve 303 ms, generate 4413 ms, typecheck 13 ms · 1041 in / 99 out tokens</sub>
+<sub>gpt-6.1-sol · text-embedding-3-small · studio-sdk 1.48.0 · latency retrieve 219 ms, generate 4737 ms, typecheck 18 ms · 1041 in / 111 out tokens</sub>
 
 ---
 
@@ -113,9 +114,13 @@ await sdk.experiment.setText(textFrameId, "Your new text content");
 
 ```ts
 const layouts = (await sdk.layout.getAll()).parsedData;
+if (!layouts) {
+  throw new Error("Could not retrieve layouts.");
+}
+
 console.log(layouts);
 
-const instagramLayout = layouts?.find(layout => layout.name === "Instagram");
+const instagramLayout = layouts.find((layout) => layout.name === "Instagram");
 if (!instagramLayout) {
   throw new Error('No layout named "Instagram" was found.');
 }
@@ -123,7 +128,7 @@ if (!instagramLayout) {
 await sdk.layout.select(instagramLayout.id);
 ```
 
-**Explanation:** Retrieves and logs all layouts, then selects the first layout whose name is exactly "Instagram". Throws an error if no matching layout is found.
+**Explanation:** Retrieves and logs all layouts, then selects the first layout whose name exactly matches "Instagram". Throws an error if layouts cannot be retrieved or no matching layout exists.
 
 **Used symbols:** `LayoutController.getAll`, `LayoutController.select`
 
@@ -137,7 +142,7 @@ await sdk.layout.select(instagramLayout.id);
 | 4 | 0.47 | `sdk.animation.getAllOnSelectedLayout` | method | [controllers/AnimationController.ts:22-31](https://github.com/chili-publish/studio-sdk/blob/1.48.0/packages/sdk/src/controllers/AnimationController.ts#L22-L31) |
 | 5 | 0.47 | `sdk.layout.setSelectedByUser` | method | [controllers/LayoutController.ts:405-415](https://github.com/chili-publish/studio-sdk/blob/1.48.0/packages/sdk/src/controllers/LayoutController.ts#L405-L415) |
 
-<sub>gpt-6.1-sol · text-embedding-3-small · studio-sdk 1.48.0 · latency retrieve 242 ms, generate 6613 ms, typecheck 22 ms · 824 in / 185 out tokens</sub>
+<sub>gpt-6.1-sol · text-embedding-3-small · studio-sdk 1.48.0 · latency retrieve 342 ms, generate 6387 ms, typecheck 24 ms · 824 in / 209 out tokens</sub>
 
 ---
 
@@ -147,7 +152,7 @@ await sdk.layout.select(instagramLayout.id);
 
 _No code: the model reported that the retrieved context was insufficient._
 
-**Explanation:** The context provides sdk.frame.setWidth, but no method to list frames or find a frame by name. Finding the frame named "Logo" requires additional SDK context; once its ID is available, its width can be set to "200" (pixels).
+**Explanation:** The provided context includes sdk.frame.setWidth, but no method for finding a frame by name or listing frames. I cannot find the frame named "Logo" and set its width to 200 without an additional lookup method.
 
 **Used symbols:** none
 
@@ -161,7 +166,7 @@ _No code: the model reported that the retrieved context was insufficient._
 | 4 | 0.35 | `BarcodeFrame` | type | [types/FrameTypes.ts:151-176](https://github.com/chili-publish/studio-sdk/blob/1.48.0/packages/sdk/src/types/FrameTypes.ts#L151-L176) |
 | 5 | 0.34 | `sdk.frame.resetWidth` | method | [controllers/FrameController.ts:341-351](https://github.com/chili-publish/studio-sdk/blob/1.48.0/packages/sdk/src/controllers/FrameController.ts#L341-L351) |
 
-<sub>gpt-6.1-sol · text-embedding-3-small · studio-sdk 1.48.0 · latency retrieve 193 ms, generate 4095 ms, typecheck 0 ms · 1111 in / 69 out tokens</sub>
+<sub>gpt-6.1-sol · text-embedding-3-small · studio-sdk 1.48.0 · latency retrieve 256 ms, generate 4771 ms, typecheck 0 ms · 1111 in / 61 out tokens</sub>
 
 ---
 
@@ -171,7 +176,7 @@ _No code: the model reported that the retrieved context was insufficient._
 
 _No code: the model reported that the retrieved context was insufficient._
 
-**Explanation:** The provided context exposes `ManagedCallbacksConfigType.events.onVariableListChanged`, whose callback receives the updated `Variable[]` list. However, it does not include a method for registering event listeners, so I cannot provide a working subscription snippet without guessing an SDK API.
+**Explanation:** The relevant event is ManagedCallbacksConfigType.events.onVariableListChanged, whose callback receives a Variable[] list. However, the provided context does not include a method for registering that callback, so I cannot provide a working subscription snippet without guessing an SDK API.
 
 **Used symbols:** none
 
@@ -185,4 +190,4 @@ _No code: the model reported that the retrieved context was insufficient._
 | 4 | 0.32 | `VariableUsagesReport` | type | [types/VariableTypes.ts:318-324](https://github.com/chili-publish/studio-sdk/blob/1.48.0/packages/sdk/src/types/VariableTypes.ts#L318-L324) |
 | 5 | 0.32 | `ManagedCallbacksConfigType` | type | [types/CommonTypes.ts:85-142](https://github.com/chili-publish/studio-sdk/blob/1.48.0/packages/sdk/src/types/CommonTypes.ts#L85-L142) |
 
-<sub>gpt-6.1-sol · text-embedding-3-small · studio-sdk 1.48.0 · latency retrieve 208 ms, generate 5836 ms, typecheck 0 ms · 1721 in / 125 out tokens</sub>
+<sub>gpt-6.1-sol · text-embedding-3-small · studio-sdk 1.48.0 · latency retrieve 343 ms, generate 6205 ms, typecheck 0 ms · 1721 in / 145 out tokens</sub>

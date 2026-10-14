@@ -12,7 +12,8 @@
     "eval": "tsx src/eval/run.ts",
     "eval:e2e": "tsx src/eval/run.ts --e2e",
     "eval:hybrid": "tsx src/eval/hybrid-experiment.ts",
-    "samples": "tsx src/samples.ts"
+    "samples": "tsx src/samples.ts",
+    "eval:subquery": "tsx src/eval/subquery-experiment.ts"
   },
   "devDependencies": {
     "@types/node": "26.6.5",

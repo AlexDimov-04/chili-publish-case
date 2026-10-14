@@ -1,5 +1,6 @@
 import { execFile } from 'node:child_process';
 import { existsSync, readFileSync, rmSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { promisify } from 'node:util';
 import { SDK_REPO_URL, SDK_SOURCE_DIR, SDK_VERSION } from '../config';
 
@@ -27,7 +28,8 @@ export async function fetchSdkSource(): Promise<string> {
   return SDK_SOURCE_DIR;
 }
 
-if (import.meta.main) {
+// Run directly (npm run fetch-sdk), not when imported by the ingest pipeline. Works on Node 22 (no import.meta.main).
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const dir = await fetchSdkSource();
   console.log(`studio-sdk ${SDK_VERSION} source at ${dir}`);
 }
