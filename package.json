@@ -18,7 +18,8 @@
     "start": "npm start -w server",
     "eval": "npm run eval -w server",
     "eval:e2e": "npm run eval:e2e -w server",
-    "eval:hybrid": "npm run eval:hybrid -w server"
+    "eval:hybrid": "npm run eval:hybrid -w server",
+    "samples": "npm run samples -w server"
   },
   "devDependencies": {
     "concurrently": "10.0.6"

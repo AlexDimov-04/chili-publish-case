@@ -11,7 +11,8 @@
     "start": "tsx src/server.ts",
     "eval": "tsx src/eval/run.ts",
     "eval:e2e": "tsx src/eval/run.ts --e2e",
-    "eval:hybrid": "tsx src/eval/hybrid-experiment.ts"
+    "eval:hybrid": "tsx src/eval/hybrid-experiment.ts",
+    "samples": "tsx src/samples.ts"
   },
   "devDependencies": {
     "@types/node": "26.6.5",
